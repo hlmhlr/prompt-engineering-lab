@@ -1,0 +1,15 @@
+# Runs the tests on GitHub's servers every time you push code.
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7      # download the repository
+      - uses: astral-sh/setup-uv@v7    # install uv
+      - run: uv sync                    # install Python + dependencies from uv.lock
+      - run: uv run pytest -v           # run the tests (fake model, no Ollama needed)
